@@ -23,7 +23,3 @@ CREATE TABLE IF NOT EXISTS favorites_list (
     restaurant INTEGER REFERENCES restaurant_list(id) ON DELETE CASCADE,
     users INTEGER REFERENCES feedme_users(id) ON DELETE CASCADE
 );
-
--- SELECT restaurant_list.title, favorites_list.id, restaurant_list.id
--- FROM restaurant_list
--- INNER JOIN favorites_list ON restaurant_list.id=favorites_list.id

@@ -7,11 +7,8 @@ const jsonParser = express.json()
 
 FavoritesRouter
     .route('/')
-    .all(requireAuth)
+    .all(requireAuth) 
     .get((req, res, next) => {
-        console.log(req.user);
-        // once requireAuth is fleshed out, then req.user will be the user object of who is logged in
-        // then instead of saying 1, you can say req.user.id
         FavoritesService.getAllFavorites(
             req.app.get('db'),
             req.user.id         
@@ -22,10 +19,9 @@ FavoritesRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-    
         FavoritesService.insertFave(
             req.app.get('db'),
-            req.body
+            { restaurant: req.body.restaurant, users: req.user.id }
         )
         .then(favorite => {
             res

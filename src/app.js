@@ -22,10 +22,10 @@ app.use(cors({
     origin: CLIENT_ORIGIN
 }))
 
-app.use('/restaurants', RestaurantsRouter)
-app.use('/favorites', FavoritesRouter)
-app.use('/users', usersRouter)
-app.use('/auth', authRouter)
+app.use('/api/restaurants', RestaurantsRouter)
+app.use('/api/favorites', FavoritesRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/auth', authRouter)
 
 app.use(function errorHandler(error, req, res, next) {
     let response

@@ -19,6 +19,8 @@ FavoritesRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
+        //check if favorite already exists for restaurant user
+        //respond with 400 if already exists
         FavoritesService.insertFave(
             req.app.get('db'),
             { restaurant: req.body.restaurant, users: req.user.id }

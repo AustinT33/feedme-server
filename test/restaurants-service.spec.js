@@ -47,16 +47,6 @@ describe(`Restaurants service object`, function () {
                     })
                 })
         })
-
-        it(`deleteFave() removes a favorite by id from 'restaurant_list' table`, () => {
-            const placeId = 3
-            return RestaurantsService.deleteFave(db, placeId)
-                .then(() => RestaurantsService.getAllRestaurants(db))
-                .then(allPlaces => {
-                    const expected = testRestaurants.filter(place => place.id !== placeId)
-                    expect(allPlaces).to.eql(expected)
-                })
-        })
     })
 
     context(`Given 'restaurant_list' has no data`, () => {
@@ -64,23 +54,6 @@ describe(`Restaurants service object`, function () {
             return RestaurantsService.getAllRestaurants(db)
                 .then(received => {
                     expect(received).to.eql([])
-                })
-        })
-
-        it(`insertFave() inserts a new restaurant and resolves the favorited place with an 'id'`, () => {
-            const favorited = {
-                title: 'Test',
-                category: 'Mexican',
-                price: '$$',
-            }
-            return RestaurantsService.insertFave(db, favorited)
-                .then(received => {
-                    expect(received).to.eql({
-                        id: 1,
-                        title: favorited.title,
-                        category: favorited.category,
-                        price: favorited.price,
-                    })
                 })
         })
     })

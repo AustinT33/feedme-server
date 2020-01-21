@@ -1,19 +1,31 @@
 const express = require('express')
 const RestaurantsService = require('./restaurants-service')
 
+const {YELP_API} = require('../config');
+
+const request = require('request');
+
+
 const RestaurantsRouter = express.Router()
 const jsonParser = express.json()
 
 RestaurantsRouter
     .route('/')
     .get((req, res, next) => {
-        RestaurantsService.getAllRestaurants(
-            req.app.get('db')
-        )
-            .then(restaurants => {
-                res.json(restaurants)
-            })
-            .catch(next)
+        const {zip_code='90210'} = req.query
+        const options = {
+            'method': 'GET',
+            'url': `https://api.yelp.com/v3/businesses/search?location=${zip_code}&limit=50`,
+            'headers': {
+              'Authorization': `Bearer ${YELP_API}`,
+              'Content-Type':'application/json'
+            }
+          };
+          request(options, function (error, response, body) { 
+              
+            if (error) next(error);
+            res.json(JSON.parse(body).businesses);
+          });
     })
     .post(jsonParser, (req, res, next) => {
     
